@@ -1,6 +1,9 @@
 # tracker-server
 Server component of the tracker expense tracking solution
 
+## Done
+* ...
+
 ## Goals
 * track expenses
 * manage budget
