@@ -1,5 +1,5 @@
 # tracker-server
-Server component to expense tracking solution
+Server component of the tracker expense tracking solution
 
 ## Goals
 * track expenses
