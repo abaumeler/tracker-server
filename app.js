@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport');
+var auth = auth = require('./auth/auth');
 
 var index = require('./routes/index');
 var expenses = require('./routes/expenses');
@@ -28,7 +30,25 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Add routes to middleware
-app.use('/', index);
+auth(passport);
+app.use(passport.initialize());
+
+app.get('/', (req, res) => {
+    res.json({
+        status: 'session cookie not set'
+    });
+});
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile']
+}));
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/'
+    }),
+    (req, res) => {}
+);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

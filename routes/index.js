@@ -7,4 +7,5 @@ var indexController = require('../controllers/indexController');
 /* GET home page. */
 router.get('/', indexController.index);
 
+router.get('/auth/google/callback ', indexController.login);
 module.exports = router;
