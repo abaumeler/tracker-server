@@ -1,69 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var passport = require('passport');
-var auth = auth = require('./auth/auth');
-
-var index = require('./routes/index');
-var expenses = require('./routes/expenses');
+const express = require('express');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 var app = express();
 
 // MongoDB setup
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb://tracker-admin:tracker-squid45@mongodb-dev.baumeler-consulting.ch/expenses';
-mongoose.connect(mongoDB, { useNewUrlParser: true });
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// PUG setup
-app.set('views', path.join(__dirname, 'views')); //look for templates in the views folder
-app.set('view engine', 'pug');
+// Middlewares
+app.use(morgan('dev'));
+app.use(bodyParser.json());
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Routes
+app.use('/users', require('./routes/users'));
 
-// Add routes to middleware
-auth(passport);
-app.use(passport.initialize());
-
-app.get('/', (req, res) => {
-    res.json({
-        status: 'session cookie not set'
-    });
-});
-
-app.get('/auth/google', passport.authenticate('google', {
-    scope: ['https://www.googleapis.com/auth/userinfo.profile']
-}));
-
-app.get('/auth/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: '/'
-    }),
-    (req, res) => {}
-);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
-  });
-
-// error handler
-app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-  });
-
-  module.exports = app;
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port);
+console.log(`Server listening at ${port}`);
