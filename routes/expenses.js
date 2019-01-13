@@ -7,6 +7,6 @@ var indexController = require('../controllers/indexController');
 /* GET expenses page. */
 router.get('/expenses', function(req, res, next) {
     res.redirect('/');
-  });
+});
 
 module.exports = router;

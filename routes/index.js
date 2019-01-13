@@ -1,3 +1,4 @@
+/* eslint-disable eol-last */
 var express = require('express');
 var router = express.Router();
 
