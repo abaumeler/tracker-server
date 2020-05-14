@@ -33,7 +33,7 @@
     "moment": "^2.22.2",
     "mongoose": "^5.3.11",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.9",
+    "nodemon": "^2.0.4",
     "pug": "^2.0.3"
   },
   "devDependencies": {
