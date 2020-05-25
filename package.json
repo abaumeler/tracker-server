@@ -34,7 +34,7 @@
     "mongoose": "^5.3.11",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
-    "pug": "^2.0.3"
+    "pug": "^3.0.0"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^13.1.0",
